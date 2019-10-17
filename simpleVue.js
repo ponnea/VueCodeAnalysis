@@ -7,6 +7,10 @@ class sVue {
         // new Watcher();
         // this.$data.test;
         new Compile(options.el,this);
+
+        if(options.created) {
+            options.created.call(this);   
+        }
     }
 
     observe (obj) {
@@ -16,6 +20,18 @@ class sVue {
         //遍历对象
         Object.keys(obj).forEach(key => {
             this.defineReactive(obj,key,obj[key]);
+            // 代理data中的属性到vue示例中
+            this.proxyData(key);
+        })
+    }
+    proxyData (key) {
+        Object.defineProperty(this, key, {
+            get () {
+                return this.$data[key];
+            },
+            set (newVal) {
+                this.$data[key] = newVal;
+            }
         })
     }
     // 定义数据响应
@@ -55,11 +71,17 @@ class Dep {
 }
 
 class Watcher {
-    constructor () {
+    constructor (vm, key, cb) {
+        this.vm = vm;
+        this.key = key;
+        this.cb = cb;
         Dep.target = this;
+        this.vm[this.key];//触发get
+        Dep.target = null;
         // console.log(Dep.target)
     }
     update() {
-        console.log(`属性更新`)
+        // console.log(`属性更新`)
+        this.cb.call(this.vm, this.vm[this.key]);
     }
 }
