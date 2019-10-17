@@ -89,6 +89,28 @@ class Compile {
     text (node, vm, exp) {
         this.update(node, vm, exp, 'text')
     }
+    //   双绑
+    model(node, vm, exp) {
+        // 指定input的value属性
+        this.update(node, vm, exp, "model");
+
+        // 视图对模型响应
+        node.addEventListener("input", e => {
+        vm[exp] = e.target.value;
+        });
+    }
+
+    modelUpdater(node, value) {
+        node.value = value;
+    }
+
+    html(node, vm, exp) {
+        this.update(node, vm, exp, "html");
+    }
+
+    htmlUpdater(node, value) {
+        node.innerHTML = value;
+    }
     isEvent (attrName) {
         return attrName.indexOf('@') == 0;
     }
