@@ -2,22 +2,44 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>vue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>simpleVue</title>
 </head>
 <body>
     <div id="app">
-
+        <p id="name">{{test1}}</p>
+        <div>
+            <div>{{test3}}</div>
+        </div>
+        <p id="name">{{test2}}</p>
     </div>
 
-    <script src="./lib/vue.js"></script>
-
+    <script src="simpleVue.js"></script>
+    <script src="compile.js"></script>
     <script>
-        var vm = new Vue({
-            el: '#app',
+        const app = new sVue({
+            el:'#app',
             data: {
-
+                test: 'test',
+                foo: {
+                    bar: 'bar'
+                }
             }
-        })
+        });
+        app.$data.test = 'change test';
+        app.$data.foo.bar = 'change bar';
+        // 数据劫持
+        // var obj = {}
+        // Object.defineProperty(obj,'name',{
+        //     get () {
+        //         return document.querySelector('#name')
+        //     },
+        //     set (val) {
+        //         document.querySelector('#name').innerHTML = val
+        //     }
+        // })
+        // obj.name = 'ponnea'
     </script>
 </body>
 </html>
