@@ -24,11 +24,20 @@
                 test: 'test',
                 foo: {
                     bar: 'bar'
-                }
+                },
+                test1: 1,
+                test2: 3,
+                test3: 5
+            },
+            created () {
+                setTimeout(() => {
+                    this.test1 = "我是测试";
+                }, 1500);
             }
         });
-        app.$data.test = 'change test';
-        app.$data.foo.bar = 'change bar';
+        
+        // app.$data.test = 'change test';
+        // app.$data.foo.bar = 'change bar';
         // 数据劫持
         // var obj = {}
         // Object.defineProperty(obj,'name',{
