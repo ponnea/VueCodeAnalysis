@@ -30,6 +30,9 @@ class sVue {
                 return this.$data[key];
             },
             set (newVal) {
+                if (this.$data[key] === newVal) {
+                    return;
+                }
                 this.$data[key] = newVal;
             }
         })
